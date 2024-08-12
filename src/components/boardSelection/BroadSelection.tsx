@@ -7,7 +7,7 @@ const BroadSelection: React.FC = () => {
     const [activeNav, setActiveNav] = useState<string>("python");
 
     return (
-        <section className="flex flex-col items-center justify-center pt-20">
+        <section className="flex flex-col items-center justify-center pt-10">
             <div className="w-[70%] flex flex-col gap-3">
                 <p className="font-bold text-3xl font-serif">A broad selection of courses</p>
                 <p className="text-md">Choose from over 220,000 online courses with new additions published every month</p>
@@ -45,15 +45,15 @@ const BroadSelection: React.FC = () => {
                                 simple syntax and readability makes Python perfect for Flask, Django, data science, and machine learning. You will
                                 learn how to build everything from games to sites to apps. Choose from a range of course that will appeal to
                             </p>
-                            <button className="border border-slate-600 p-2 font-bold w-fit">Explore Python</button>
+                            <button className="border border-slate-600 p-2 rounded-md font-bold w-fit">Explore Python</button>
                         </div>
                         <div className="">
                             {
                                 pythonCourses.map((course) => (
-                                    <div className="p-2 shadow-xl-inner w-fit" key={course.id}>
-                                        <Image className="w-72 h-44" src={course.image} width={500} height={500} alt="course image" />
+                                    <div className="p-5 cursor-pointer w-fit" key={course.id}>
+                                        <Image className="w-64 h-36" src={course.image} width={500} height={500} alt="course image" />
                                         <p className="font-bold line-clamp-2">{course.name}</p>
-                                        <p className="text-light text-sm">{course.authur}</p>
+                                        <p className="text-thin text-sm">{course.authur}</p>
                                     </div>
                                 ))
                             }

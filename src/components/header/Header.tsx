@@ -1,13 +1,13 @@
 "use client";
-import { useState } from "react";
+import { useGlobal } from "@/context/GlobalContext";
 import { AiOutlineMenu } from "react-icons/ai";
 import { BiGlobe, BiSearch, BiX } from "react-icons/bi";
 import { BsCart } from "react-icons/bs";
 
 const Header: React.FC = () => {
-    const [closeTopHeader, setCloseTopHeader] = useState<boolean>(false);
+    const { closeTopHeader, toggleCloseTopHeader } = useGlobal()
     return (
-        <header className={`flex flex-col ${closeTopHeader ? "h-[75px]" : "h-[130px]"} shadow-xl`}>
+        <header className={`fixed top-0 w-full z-20 bg-white flex flex-col ${closeTopHeader ? "h-[75px]" : "h-[130px]"} shadow-xl`}>
             <div className={`${closeTopHeader ? "h-0 p-0 overflow-hidden" : "h-16 py-2"} bg-[#fffd90c7] flex flex-col duration-100 items-center justify-center`}>
                 <div className="flex lg:flex-row flex-col justify-center items-center">
                     <strong className="text-sm lg:text-lg" >Learn from a variety of teaching styles |</strong>
@@ -16,7 +16,7 @@ const Header: React.FC = () => {
                 <p className="font-black lg:text-lg animate-bounce text-sm pb-1">2 days left!</p>
                 {
                     !closeTopHeader &&
-                    <BiX className="absolute right-5 top-2 text-2xl cursor-pointer" onClick={() => setCloseTopHeader((pre) => !pre)} />
+                    <BiX className="absolute right-5 top-2 text-2xl cursor-pointer" onClick={toggleCloseTopHeader} />
                 }
             </div>
             <div className="h-full flex flex-row items-center justify-between px-5 xl:hidden">

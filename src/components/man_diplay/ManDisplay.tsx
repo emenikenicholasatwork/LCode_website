@@ -1,6 +1,8 @@
 "use client";
+import { useGlobal } from "@/context/GlobalContext";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { SiBmw, SiHonda, SiSpotify, SiTon, SiToyota, SiVisualstudio, SiWindows10 } from "react-icons/si";
 
 const slideData = [
     {
@@ -36,6 +38,7 @@ const slideData = [
 const ManDisplay: React.FC = () => {
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const [opacity, setOpacity] = useState<number>(1);
+    const { closeTopHeader } = useGlobal()
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -52,7 +55,7 @@ const ManDisplay: React.FC = () => {
     }, []);
 
     return (
-        <div className="w-full h-[400px] flex justify-center">
+        <div className={`w-full h-[600px] flex flex-col gap-5 items-center justify-between ${closeTopHeader ? "mt-[75px]" : "mt-[130px]"} `}>
             <div className="bg-gradient-to-r from-slate-100 to-pink-100 h-[400px] w-[70%] flex items-center justify-between ps-5 overflow-hidden">
                 <div className="flex flex-col justify-center items-start shadow-2xl w-fit p-10">
                     <p className={`font-bold text-2xl font-sans duration-500`} style={{ opacity }}>{slideData[currentIndex].name}</p>
@@ -63,6 +66,18 @@ const ManDisplay: React.FC = () => {
                 </div>
                 <div className="flex flex-col h-full w-[50%] justify-end items-center">
                     <Image className={`w-96 h-96 duration-500`} style={{ opacity }} src={slideData[currentIndex].image} width={500} height={500} alt="current display image" />
+                </div>
+            </div>
+            <div className="h-[200px] w-full bg-slate-100 flex flex-col items-center gap-5 justify-center">
+                <p>Trusted by over 15,000 companies and millions of learners around the world</p>
+                <div className="flex flex-row gap-10">
+                    <SiBmw className="text-5xl" />
+                    <SiToyota className="text-5xl" />
+                    <SiHonda className="text-5xl" />
+                    <SiSpotify className="text-5xl" />
+                    <SiVisualstudio className="text-5xl" />
+                    <SiWindows10 className="text-5xl" />
+                    <SiTon className="text-5xl" />
                 </div>
             </div>
         </div>
