@@ -60,7 +60,7 @@ const ManDisplay: React.FC = () => {
                 <div className="flex flex-col justify-center items-start shadow-2xl w-fit p-10">
                     <p className={`font-bold text-2xl font-sans duration-500`} style={{ opacity }}>{slideData[currentIndex].name}</p>
                     <div className={`flex flex-col justify-center items-start`}>
-                        <p className={`font-thin duration-500`} style={{ opacity }}>{slideData[currentIndex].description1}</p>
+                        <p className={`duration-500`} style={{ opacity }}>{slideData[currentIndex].description1}</p>
                         <p className={`duration-500`} style={{ opacity }}>{slideData[currentIndex].description2}</p>
                     </div>
                 </div>

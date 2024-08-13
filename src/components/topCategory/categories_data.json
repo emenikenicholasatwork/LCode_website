@@ -18,18 +18,18 @@
     },{
         "id":5,
         "name":"Personal Development",
-        "image": ""
+        "image": "/images/motivation.png"
     },{
         "id":6,
         "name":"Business",
-        "image": ""
+        "image": "/images/business.png"
     },{
         "id":7,
         "name":"Photography",
-        "image": ""
+        "image": "/images/photography.png"
     },{
         "id":8,
         "name":"Music",
-        "image": ""
+        "image": "/images/music-note.png"
     }
 ]

@@ -1,5 +1,6 @@
 "use client"
 import BroadSelection from "@/components/boardSelection/BroadSelection";
+import Footer from "@/components/footer/Footer";
 import Header from "@/components/header/Header";
 import ManDisplay from "@/components/man_diplay/ManDisplay";
 import TopCategories from "@/components/topCategory/TopCategories";
@@ -12,7 +13,8 @@ export default function Home() {
         <Header />
         <ManDisplay />
         <BroadSelection />
-        <TopCategories />s
+        <TopCategories />
+        <Footer />
       </main>
     </GlobalProvider>
   );
