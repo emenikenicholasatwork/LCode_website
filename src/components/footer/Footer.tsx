@@ -1,23 +1,10 @@
 import { BiGlobe } from "react-icons/bi"
 import { SiBmw, SiToyota, SiHonda, SiSpotify, SiVisualstudio } from "react-icons/si"
 
-const Footer = () => {
+const Footer: React.FC = () => {
     return (
         <footer className="w-full h-52">
-            <div className="flex flex-col justify-between w-full">
-                <div className="w-full h-[1px] bg-black"></div>
-                <div className="flex flex-row items-center justify-between h-20 px-10">
-                    <p className="flex-auto font-bold text-xl">Top companies choose <span className="text-indigo-800 cursor-pointer hover:underline">LCode Business</span> build in-demand career skills.</p>
-                    <div className="flex flex-row items-center justify-between basis-1/4">
-                        <SiBmw className="text-5xl" />
-                        <SiToyota className="text-5xl" />
-                        <SiHonda className="text-5xl" />
-                        <SiSpotify className="text-5xl" />
-                        <SiVisualstudio className="text-5xl" />
-                    </div>
-                </div>
-                <div className="w-full h-[1px] bg-black"></div>
-            </div>
+            <div className="w-full h-[1px] bg-black"></div>
             <div className="flex flex-row justify-between px-10 py-10">
                 <div className="flex flex-row justify-between gap-20">
                     <div className="flex flex-col gap-1">
