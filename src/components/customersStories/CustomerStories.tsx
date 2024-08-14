@@ -36,51 +36,129 @@ const slideData = [
 ]
 
 const CustomerStories: React.FC = () => {
-    const [currentIndex, setCurrentIndex] = useState(0)
-    function handleNextSlide() {
-        if (currentIndex === slideData.length - 1) {
-            return
-        } else {
-            setCurrentIndex(prevIndex => prevIndex + 1)
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [isSliding, setIsSliding] = useState(false);
+    const [slideDirection, setSlideDirection] = useState<"next" | "prev">("next");
 
+    const handleNextSlide = () => {
+        if (currentIndex < slideData.length - 1 && !isSliding) {
+            setCurrentIndex(prevIndex => prevIndex + 1);
+            setSlideDirection("next");
+            setIsSliding(true);
+            setTimeout(() => {
+                setIsSliding(false);
+            }, 500);
         }
-    }
-    function handlePrevSlide() {
-        if (currentIndex === 0) {
-            return
-        } else {
-            setCurrentIndex(prevIndex => prevIndex - 1)
+    };
+
+    const handlePrevSlide = () => {
+        if (currentIndex > 0 && !isSliding) {
+            setCurrentIndex(prevIndex => prevIndex - 1);
+            setSlideDirection("prev");
+            setIsSliding(true);
+            setTimeout(() => {
+                setIsSliding(false);
+            }, 500);
         }
-    }
+    };
+
     return (
         <section className="flex py-20 flex-col gap-8 items-center justify-center w-full">
-            <div className="px-10 w-[1000px] overflow-hidden transition-transform duration-500 ease-in-out ">
-                <div className="bg-slate-200 flex flex-row items-center justify-between px-20 gap-20 py-10 relative">
-                    <div className="flex flex-col justify-center gap-10">
-                        <div className="flex flex-col justify-center gap-3">
-                            <ImQuotesLeft className="text-2xl" />
-                            <blockquote className="w-96">
-                                {slideData[currentIndex].description}
-                            </blockquote>
+            <div className="px-10 w-[1000px] overflow-hidden relative">
+                <div className="relative h-[400px] flex items-center">
+                    {/* Current Slide */}
+                    <div
+                        className={`absolute inset-0 flex items-center justify-between gap-20 px-20 py-10 transition-transform duration-300 ease-in-out bg-slate-200 ${isSliding
+                            ? slideDirection === "next"
+                                ? "slide-next"
+                                : "slide-prev"
+                            : ""
+                            }`}
+                    >
+                        <div className="flex flex-col justify-center gap-10">
+                            <div className="flex flex-col justify-center gap-3">
+                                <ImQuotesLeft className="text-2xl" />
+                                <blockquote className="w-96">
+                                    {slideData[currentIndex].description}
+                                </blockquote>
+                            </div>
+                            <p className="text-indigo-800 cursor-pointer hover:text-indigo-500">Read full story</p>
                         </div>
-                        <p className="text-indigo-800 cursor-pointer hover:text-indigo-500">Read full story</p>
-                    </div>
-                    <div className="flex flex-col items-center justify-center gap-3">
-                        <Image className="rounded-full w-44 h-44" src={slideData[currentIndex].image} width={400} height={400} alt="customer image" />
-                        <div className="flex flex-col items-center">
-                            <p className="font-bold text-lg">{slideData[currentIndex].name1}</p>
-                            <p className=" font-thin">{slideData[currentIndex].title}</p>
+                        <div className="flex flex-col items-center justify-center gap-3">
+                            <Image className="rounded-full w-44 h-44" src={slideData[currentIndex].image} width={400} height={400} alt="customer image" />
+                            <div className="flex flex-col items-center">
+                                <p className="font-bold text-lg">{slideData[currentIndex].name1}</p>
+                                <p className="font-thin">{slideData[currentIndex].title}</p>
+                            </div>
+                            <p>{slideData[currentIndex].name2}</p>
                         </div>
-                        <p>{slideData[currentIndex].name2}</p>
                     </div>
-                    {
-                        currentIndex < slideData.length - 1 &&
-                        <BiChevronRight onClick={handleNextSlide} className="absolute text-5xl -right-6 bg-zinc-400 hover:bg-zinc-300 duration-100 cursor-pointer rounded-full" />
-                    }
-                    {
-                        currentIndex > 0 &&
-                        <BiChevronLeft onClick={handlePrevSlide} className="absolute text-5xl -left-6 bg-zinc-400 hover:bg-zinc-300 duration-100 cursor-pointer rounded-full" />
-                    }
+
+                    {/* Incoming Slide */}
+                    <div
+                        className={`absolute inset-0 flex items-center justify-between gap-20 px-20 py-10 transition-transform duration-300 ease-in-out bg-slate-200 ${isSliding
+                            ? slideDirection === "next"
+                                ? "slide-next-incoming"
+                                : "slide-prev-incoming"
+                            : ""
+                            }`}
+                    >
+                        <div className="flex flex-col justify-center gap-10">
+                            <div className="flex flex-col justify-center gap-3">
+                                <ImQuotesLeft className="text-2xl" />
+                                <blockquote className="w-96">
+                                    {slideDirection === "next"
+                                        ? slideData[currentIndex + 1]?.description || slideData[0].description
+                                        : slideData[currentIndex - 1]?.description || slideData[slideData.length - 1].description}
+                                </blockquote>
+                            </div>
+                            <p className="text-indigo-800 cursor-pointer hover:text-indigo-500">Read full story</p>
+                        </div>
+                        <div className="flex flex-col items-center justify-center gap-3">
+                            <Image
+                                className="rounded-full w-44 h-44"
+                                src={
+                                    slideDirection === "next"
+                                        ? slideData[currentIndex + 1]?.image || slideData[0].image
+                                        : slideData[currentIndex - 1]?.image || slideData[slideData.length - 1].image
+                                }
+                                width={400}
+                                height={400}
+                                alt="customer image"
+                            />
+                            <div className="flex flex-col items-center">
+                                <p className="font-bold text-lg">
+                                    {slideDirection === "next"
+                                        ? slideData[currentIndex + 1]?.name1 || slideData[0].name1
+                                        : slideData[currentIndex - 1]?.name1 || slideData[slideData.length - 1].name1}
+                                </p>
+                                <p className=" font-thin">
+                                    {slideDirection === "next"
+                                        ? slideData[currentIndex + 1]?.title || slideData[0].title
+                                        : slideData[currentIndex - 1]?.title || slideData[slideData.length - 1].title}
+                                </p>
+                            </div>
+                            <p>
+                                {slideDirection === "next"
+                                    ? slideData[currentIndex + 1]?.name2 || slideData[0].name2
+                                    : slideData[currentIndex - 1]?.name2 || slideData[slideData.length - 1].name2}
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Navigation Buttons */}
+                    {currentIndex < slideData.length - 1 && (
+                        <BiChevronRight
+                            onClick={handleNextSlide}
+                            className="absolute text-5xl -right-6 bg-zinc-400 transform -translate-y-1/2 hover:bg-zinc-300 duration-100 cursor-pointer rounded-full"
+                        />
+                    )}
+                    {currentIndex > 0 && (
+                        <BiChevronLeft
+                            onClick={handlePrevSlide}
+                            className="absolute text-5xl -left-6 bg-zinc-400 hover:bg-zinc-300 duration-100 cursor-pointer rounded-full"
+                        />
+                    )}
                 </div>
             </div>
             <div className="flex flex-row items-center justify-center text-indigo-800 cursor-pointer hover:text-indigo-500">
@@ -88,6 +166,7 @@ const CustomerStories: React.FC = () => {
                 <BiChevronRight />
             </div>
         </section>
-    )
-}
-export default CustomerStories
+    );
+};
+
+export default CustomerStories;
