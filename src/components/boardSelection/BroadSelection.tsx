@@ -5,11 +5,11 @@ import PythonSelection from "./pythonSelection/PythonSelection";
 const BroadSelection: React.FC = () => {
     const [activeNav, setActiveNav] = useState<string>("python");
     return (
-        <section className="flex flex-col items-center justify-center pt-10">
-            <div className="w-[70%] flex flex-col gap-3">
+        <section className="flex flex-col w-full items-center justify-center pt-10">
+            <div className="w-[90%] flex flex-col gap-3">
                 <p className="font-bold text-3xl font-serif">A broad selection of courses</p>
                 <p className="text-md">Choose from over 220,000 online courses with new additions published every month</p>
-                <div className="flex flex-col gap-2">
+                <div className="w-full flex flex-col gap-2 items-center justify-center">
                     <nav>
                         <ul className="flex flex-row items-center gap-5 font-bold">
                             <li className={`${activeNav === "python" ? "text-black" : "text-slate-500"} cursor-pointer duration-75`} onClick={() => setActiveNav("python")}>

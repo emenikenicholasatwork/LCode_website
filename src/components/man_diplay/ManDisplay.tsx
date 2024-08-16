@@ -49,13 +49,13 @@ const ManDisplay: React.FC = () => {
                 );
                 setOpacity(1);
             }, 500);
-        }, 5000);
+        }, 10000);
 
         return () => clearInterval(timer);
     }, []);
 
     return (
-        <div className={`w-full h-[600px] flex flex-col gap-5 items-center justify-between ${closeTopHeader ? "mt-[75px]" : "mt-[130px]"} `}>
+        <div className={`w-full h-[650px] flex flex-col gap-5 items-center justify-between ${closeTopHeader ? "mt-[75px]" : "mt-[130px]"} `}>
             <div className="bg-gradient-to-r from-slate-100 to-pink-100 h-[400px] w-[70%] flex items-center justify-between ps-5 overflow-hidden">
                 <div className="flex flex-col justify-center items-start shadow-2xl w-fit p-10">
                     <p className={`font-bold text-2xl font-sans duration-500`} style={{ opacity }}>{slideData[currentIndex].name}</p>

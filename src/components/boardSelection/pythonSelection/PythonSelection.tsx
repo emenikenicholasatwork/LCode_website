@@ -1,27 +1,116 @@
+import LazyImage from "@/components/lazyloadingimage/LazyImage";
+import axios from "axios";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { Vortex } from "react-loader-spinner";
+
+interface VideoInterface {
+    title: string;
+    description: string;
+    videoId: string;
+    thumbnailUrl: string;
+    duration: string;
+    channelTitle: string;
+}
+
+const YOUTUBE_SEARCH_API_URL = "https://www.googleapis.com/youtube/v3/search";
+const YOUTUBE_VIDEOS_API_URL = "https://www.googleapis.com/youtube/v3/videos";
+const YOUTUBE_API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY; // Replace with your YouTube API key
+
 const PythonSelection = () => {
+    const [videoList, setVideoList] = useState<VideoInterface[]>();
+
+    // Function to convert ISO 8601 duration to readable format (e.g., 5:33)
+    const formatDuration = (isoDuration: string): string => {
+        const regex = /PT(\d+H)?(\d+M)?(\d+S)?/;
+        const matches = regex.exec(isoDuration);
+        const hours = matches?.[1] ? parseInt(matches[1]) : 0;
+        const minutes = matches?.[2] ? parseInt(matches[2]) : 0;
+        const seconds = matches?.[3] ? parseInt(matches[3]) : 0;
+        return `${hours ? `${hours}:` : ''}${minutes}:${seconds.toString().padStart(2, "0")}`;
+    };
+
+    async function fetchVideoData() {
+        try {
+            // Step 1: Search for videos matching the python
+            const searchResponse = await axios.get(YOUTUBE_SEARCH_API_URL, {
+                params: {
+                    part: "snippet",
+                    q: "python course",
+                    type: "video",
+                    videoDuration: 'long',
+                    key: YOUTUBE_API_KEY,
+                    maxResults: 20,
+                },
+            });
+
+            // Step 2: Fetch all video IDs from the search response
+            const videoIds = searchResponse.data.items.map((item: any) => item.id.videoId).join(",");
+
+            // Step 3: Fetch all video details from the video IDs
+            const videosResponse = await axios.get(YOUTUBE_VIDEOS_API_URL, {
+                params: {
+                    part: "contentDetails,snippet",
+                    id: videoIds,
+                    key: YOUTUBE_API_KEY,
+                },
+            });
+
+            // Step 4: Extract all video details from the video response
+            const videos: VideoInterface[] = videosResponse.data.items.map((item: any) => ({
+                title: item.snippet.title,
+                channelTitle: item.snippet.channelTitle,
+                description: item.snippet.description,
+                videoId: item.id,
+                thumbnailUrl: item.snippet.thumbnails.high.url,
+                duration: formatDuration(item.contentDetails.duration),
+            }));
+
+            setVideoList(videos);
+        } catch (error) {
+            console.error("Error fetching YouTube videos:", error);
+            throw new Error("Could not fetch YouTube videos with duration.");
+        }
+    }
+
+    useEffect(() => {
+        fetchVideoData();
+    }, []);
+
     return (
         <div className="w-full flex flex-col border border-black p-5 gap-5">
-            <div className="w-full flex flex-col gap-2 ">
+            <div className="flex flex-col gap-2">
                 <p className="font-bold text-2xl font-serif">Expand your career opportunities with Python</p>
-                <p className="resize-none w-[60%] line-clamp-3">
-                    Take on of LCode range of Python courses and learn how to code using this incredibly usefull language.Its
-                    simple syntax and readability makes Python perfect for Flask, Django, data science, and machine learning. You will
-                    learn how to build everything from games to sites to apps. Choose from a range of course that will appeal to
+                <p className="resize-none line-clamp-3">
+                    Take one of LCode range of Python courses and learn how to code using this incredibly useful language.
+                    Its simple syntax and readability make Python perfect for Flask, Django, data science, and machine learning.
+                    You will learn how to build everything from games to sites to apps. Choose from a range of courses that will appeal to you.
                 </p>
                 <button className="border border-slate-600 p-2 rounded-md font-bold w-fit">Explore Python</button>
             </div>
-            <div className="">
-                {/* {
-                    pythonCourses.map((course) => (
-                        <div className="p-5 cursor-pointer w-fit" key={course.id}>
-                            <Image className="w-64 h-36" src={course.image} width={500} height={500} alt="course image" />
-                            <p className="font-bold line-clamp-2">{course.name}</p>
-                            <p className=" text-sm">{course.authur}</p>
+            <div className="duration-300 flex flex-nowrap p-1 gap-x-3 overflow-x-auto">
+                {!videoList ? (
+                    <div>
+                        <Vortex
+                            visible={true}
+                            ariaLabel="rotating-lines-loading"
+                        />
+                    </div>
+                ) : (
+                    videoList.map((course) => (
+                        <div className="duration-200 p-1 cursor-pointer min-w-[250px]" key={course.videoId}>
+                            <LazyImage src={course.thumbnailUrl} alt={course.title} />
+                            <p className="font-bold line-clamp-2">{course.title}</p>
+                            <div className="flex flex-row items-center w-full justify-between">
+                                <p className="text-sm font-light">{course.channelTitle}</p>
+                                <p className="text-xs text-gray-500">{course.duration}</p>
+                            </div>
                         </div>
                     ))
-                } */}
+                )}
             </div>
         </div>
-    )
-}
-export default PythonSelection
+    );
+};
+
+export default PythonSelection;
