@@ -16,7 +16,7 @@ const YOUTUBE_SEARCH_API_URL = "https://www.googleapis.com/youtube/v3/search";
 const YOUTUBE_VIDEOS_API_URL = "https://www.googleapis.com/youtube/v3/videos";
 const YOUTUBE_API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY; // Replace with your YouTube API key
 
-const PythonSelection = () => {
+const JavascriptSelection = () => {
     const [videoList, setVideoList] = useState<VideoInterface[]>();
 
     // Function to convert ISO 8601 duration to readable format (e.g., 5:33)
@@ -31,11 +31,11 @@ const PythonSelection = () => {
 
     async function fetchVideoData() {
         try {
-            // Step 1: Search for videos matching the python
+            // Step 1: Search for videos matching the javascript
             const searchResponse = await axios.get(YOUTUBE_SEARCH_API_URL, {
                 params: {
                     part: "snippet",
-                    q: "python course",
+                    q: "javascript course",
                     type: "video",
                     videoDuration: 'long',
                     key: YOUTUBE_API_KEY,
@@ -79,13 +79,13 @@ const PythonSelection = () => {
     return (
         <div className="w-full flex flex-col border border-black p-5 gap-5">
             <div className="flex flex-col gap-2">
-                <p className="font-bold text-2xl font-serif">Expand your career opportunities with Python</p>
+                <p className="font-bold text-2xl font-serif">Expand your career opportunities with Javascript</p>
                 <p className="resize-none line-clamp-3">
-                    Take one of LCode range of Python courses and learn how to code using this incredibly useful language.
-                    Its simple syntax and readability make Python perfect for Flask, Django, data science, and machine learning.
+                    Take one of LCode range of Javascript courses and learn how to code using this incredibly useful language.
+                    Its simple syntax and readability make Javascript perfect for Flask, Django, data science, and machine learning.
                     You will learn how to build everything from games to sites to apps. Choose from a range of courses that will appeal to you.
                 </p>
-                <button className="border border-slate-600 p-2 rounded-md font-bold w-fit">Explore Python</button>
+                <button className="border border-slate-600 p-2 rounded-md font-bold w-fit">Explore Javascript</button>
             </div>
             <div className="duration-300 flex flex-nowrap p-1 gap-x-3 overflow-x-auto">
                 {!videoList ? (
@@ -112,4 +112,4 @@ const PythonSelection = () => {
     );
 };
 
-export default PythonSelection;
+export default JavascriptSelection;

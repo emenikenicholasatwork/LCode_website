@@ -5,6 +5,9 @@ import { createContext, ReactNode, useContext, useState } from "react";
 interface GlobalContextProps {
     closeTopHeader: boolean,
     toggleCloseTopHeader: () => void;
+    openAuthComponent: () => void;
+    closeAuthComponent: () => void;
+    isShowAuthComponent: boolean;
 }
 
 
@@ -16,6 +19,14 @@ interface GlobalProviderProps {
 
 export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
     const [closeTopHeader, setCloseTopHeader] = useState(false);
+    const [isShowAuthComponent, setIsShowAuthComponent] = useState(false);
+
+    function openAuthComponent() {
+        setIsShowAuthComponent(true);
+    }
+    function closeAuthComponent() {
+        setIsShowAuthComponent(false)
+    }
     function toggleCloseTopHeader() {
         setCloseTopHeader(true);
     }
@@ -24,6 +35,9 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
             value={{
                 closeTopHeader,
                 toggleCloseTopHeader,
+                openAuthComponent,
+                closeAuthComponent,
+                isShowAuthComponent,
             }}>
             {children}
         </GlobalContext.Provider>

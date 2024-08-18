@@ -1,11 +1,13 @@
 "use client";
 import { useGlobal } from "@/context/GlobalContext";
+import { useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
-import { BiGlobe, BiSearch, BiX } from "react-icons/bi";
+import { BiGlobe, BiSearch, BiUser, BiX } from "react-icons/bi";
 import { BsCart } from "react-icons/bs";
 
 const Header: React.FC = () => {
-    const { closeTopHeader, toggleCloseTopHeader } = useGlobal()
+    const { closeTopHeader, toggleCloseTopHeader, openAuthComponent } = useGlobal()
+    const [openAuthWidget, setOpenAuthWidget] = useState<boolean>(false);
     return (
         <header className={`fixed top-0 w-full z-20 bg-white flex flex-col ${closeTopHeader ? "h-[75px]" : "h-[130px]"} shadow-xl`}>
             <div className={`${closeTopHeader ? "h-0 p-0 overflow-hidden" : "h-16 py-2"} bg-[#fffd90c7] flex flex-col duration-100 items-center justify-center`}>
@@ -20,11 +22,25 @@ const Header: React.FC = () => {
                 }
             </div>
             <div className="h-full flex flex-row items-center justify-between px-5 xl:hidden">
-                <AiOutlineMenu className="text-2xl" />
+                <AiOutlineMenu className="text-2xl cursor-pointer" />
                 <p className="text-xl animate-pulse font-serif font-extrabold"><strong>L</strong>Code</p>
-                <div className="flex flex-row items-center gap-5">
-                    <BiSearch className="text-2xl" />
-                    <BsCart className="text-2xl" />
+                <div className="flex flex-row items-center gap-5 relative">
+                    <BiUser className="text-2xl cursor-pointer" onClick={() => setOpenAuthWidget(true)} />
+                    <BiSearch className="text-2xl cursor-pointer" />
+                    <BsCart className="text-2xl cursor-pointer" />
+                    {
+                        openAuthWidget &&
+                    <div className="absolute right-1 -bottom-28 min-w-44 z-20 shadow-xl bg-gray-100 p-2">
+                        <ul>
+                            <li className="cursor-pointer p-2 duration-100 rounded-md hover:bg-blue-400 hover:text-white" onClick={()=>{setOpenAuthWidget(false);openAuthComponent()}}>
+                                <p className="text-lg">Login</p>
+                            </li>
+                            <li className="cursor-pointer p-2 duration-100 rounded-md hover:bg-blue-400 hover:text-white" onClick={()=>{setOpenAuthWidget(false);openAuthComponent()}}>
+                                <p className="text-lg">Sign up</p>
+                            </li>
+                        </ul>
+                    </div>
+                    }
                 </div>
             </div>
             <div className="h-full hidden xl:flex flex-row px-2 items-center gap-3">
@@ -40,8 +56,8 @@ const Header: React.FC = () => {
                     <p className="text-sm font-thin cursor-pointer">LCode Business</p>
                     <p className="text-sm cursor-pointer">Teach on LCode</p>
                     <BsCart className="text-xl cursor-pointer basis-[5%]" />
-                    <button className="border p-2 border-black basis-[20%]">Log in</button>
-                    <button className="border p-2 border-black basis-[20%] bg-black text-white">Sign up</button>
+                    <button className="border p-2 border-black basis-[20%]" onClick={openAuthComponent}>Log in</button>
+                    <button className="border p-2 border-black basis-[20%] bg-black text-white" onClick={openAuthComponent}>Sign up</button>
                     <div className="flex p-2 border border-black basis-[5%] cursor-pointer">
                         <BiGlobe className="text-xl" />
                     </div>
