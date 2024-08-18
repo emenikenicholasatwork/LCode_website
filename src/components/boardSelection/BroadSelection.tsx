@@ -3,7 +3,7 @@ import { useState } from "react"
 import PythonSelection from "./pythonSelection/PythonSelection";
 import JavaSelection from "./javaSelection/JavaSelection";
 import JavascriptSelection from "./javascript/JavascriptSelection";
-import AI from "./ai/AI";
+import AI from "./Cplus/Cplus";
 import HTMLSelection from "./html&css/HTML";
 import AWSSelection from "./aws/AWS";
 
@@ -29,8 +29,8 @@ const BroadSelection: React.FC = () => {
                             <li className={`${activeNav === "html" ? "text-black" : "text-slate-500"} cursor-pointer duration-75`} onClick={() => setActiveNav("html")}>
                                 <p>HTML & CSS</p>
                             </li>
-                            <li className={`${activeNav === "ai" ? "text-black" : "text-slate-500"} cursor-pointer duration-75`} onClick={() => setActiveNav("ai")}>
-                                <p>AI & ML</p>
+                            <li className={`${activeNav === "ai" ? "text-black" : "text-slate-500"} cursor-pointer duration-75`} onClick={() => setActiveNav("cplus")}>
+                                <p>C++</p>
                             </li>
                             <li className={`${activeNav === "aws" ? "text-black" : "text-slate-500"} cursor-pointer duration-75`} onClick={() => setActiveNav("aws")}>
                                 <p>Amazon AWS</p>
@@ -40,7 +40,7 @@ const BroadSelection: React.FC = () => {
                     {activeNav === "python" && <PythonSelection />}
                     {activeNav === "java" && <JavaSelection/>}
                     {activeNav === "javascript" && <JavascriptSelection/>}
-                    {activeNav === "ai" && <AI/>}
+                    {activeNav === "cplus" && <AI/>}
                     {activeNav === "html" && <HTMLSelection/>}
                     {activeNav === "aws" && <AWSSelection/>}
                 </div>

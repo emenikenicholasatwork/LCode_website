@@ -10,7 +10,7 @@ const BecomeAnInstructor: React.FC = () => {
                     <blockquote className="w-96">
                         Instructors from around the world teach millions of learners on LCode. We provide the tools and skills to teach what you love.
                     </blockquote>
-                    <button className="bg-zinc-400 p-3 rounded-md font-bold hover:bg-gray-300 duration-100 ">Starting teaching today</button>
+                    <button className="bg-yellow-900 text-white p-3 rounded-md font-bold duration-100 hover:bg-yellow-700 ">Starting teaching today</button>
                 </div>
             </div>
         </section>

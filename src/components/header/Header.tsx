@@ -4,7 +4,19 @@ import { useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { BiGlobe, BiSearch, BiUser, BiX } from "react-icons/bi";
 import { BsCart } from "react-icons/bs";
+import { TiChevronRightOutline } from "react-icons/ti";
 
+const CategoryData = [
+    {
+        "id":1,
+        "name":"Java",
+        "category":[{
+            "id":1,
+            "Game Development": ["2D Game Development", "3D Game Development", "Game Engine", "Mobile Game Development", "AI and Pathfinding", "Multiplayer and Networked Games", "Game Scripting", "VR and AR Game Development"]
+        }]
+    }
+]
+// "Automation", "AI & Machine Learning", "Server Developement", "Backend Development", "Mobile App Development"
 const Header: React.FC = () => {
     const { closeTopHeader, toggleCloseTopHeader, openAuthComponent } = useGlobal()
     const [openAuthWidget, setOpenAuthWidget] = useState<boolean>(false);
@@ -46,7 +58,6 @@ const Header: React.FC = () => {
             <div className="h-full hidden xl:flex flex-row px-2 items-center gap-3">
                 <div className="flex flex-row items-center justify-center gap-3 basis-[10%]">
                     <p className="font-extrabold font-sans animate-pulse text-2xl"><strong>L</strong>Code</p>
-                    <p className="text-sm cursor-pointer">Categories</p>
                 </div>
                 <div className="flex flex-row items-center gap-3 border rounded-full border-slate-400 bg-slate-100 basis-[60%] p-3">
                     <BiSearch className="text-slate-600 text-xl cursor-pointer" />

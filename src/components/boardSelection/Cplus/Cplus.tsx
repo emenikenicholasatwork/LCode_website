@@ -8,7 +8,7 @@ interface VideoInterface {
     title: string;
     description: string;
     videoId: string;
-    thumbnailUrl: string;
+    thumbnCpluslUrl: string;
     duration: string;
     channelTitle: string;
 }
@@ -17,7 +17,7 @@ const YOUTUBE_SEARCH_API_URL = "https://www.googleapis.com/youtube/v3/search";
 const YOUTUBE_VIDEOS_API_URL = "https://www.googleapis.com/youtube/v3/videos";
 const YOUTUBE_API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY; // Replace with your YouTube API key
 
-const AI = () => {
+const Cplus = () => {
     const [videoList, setVideoList] = useState<VideoInterface[]>();
 
     // Function to convert ISO 8601 duration to readable format (e.g., 5:33)
@@ -32,11 +32,11 @@ const AI = () => {
 
     async function fetchVideoData() {
         try {
-            // Step 1: Search for videos matching the AI
+            // Step 1: Search for videos matching the Cplus
             const searchResponse = await axios.get(YOUTUBE_SEARCH_API_URL, {
                 params: {
                     part: "snippet",
-                    q: "AI course",
+                    q: "C++ course",
                     type: "video",
                     videoDuration: 'long',
                     key: YOUTUBE_API_KEY,
@@ -47,29 +47,29 @@ const AI = () => {
             // Step 2: Fetch all video IDs from the search response
             const videoIds = searchResponse.data.items.map((item: any) => item.id.videoId).join(",");
 
-            // Step 3: Fetch all video details from the video IDs
+            // Step 3: Fetch all video detCplusls from the video IDs
             const videosResponse = await axios.get(YOUTUBE_VIDEOS_API_URL, {
                 params: {
-                    part: "contentDetails,snippet",
+                    part: "contentDetCplusls,snippet",
                     id: videoIds,
                     key: YOUTUBE_API_KEY,
                 },
             });
 
-            // Step 4: Extract all video details from the video response
+            // Step 4: Extract all video detCplusls from the video response
             const videos: VideoInterface[] = videosResponse.data.items.map((item: any) => ({
                 title: item.snippet.title,
                 channelTitle: item.snippet.channelTitle,
                 description: item.snippet.description,
                 videoId: item.id,
-                thumbnailUrl: item.snippet.thumbnails.high.url,
-                duration: formatDuration(item.contentDetails.duration),
+                thumbnCpluslUrl: item.snippet.thumbnCplusls.high.url,
+                duration: formatDuration(item.contentDetCplusls.duration),
             }));
 
             setVideoList(videos);
         } catch (error) {
             console.error("Error fetching YouTube videos:", error);
-            toast.error("Require internet connection")
+            toast.error("require internet connection")
         }
     }
 
@@ -80,13 +80,13 @@ const AI = () => {
     return (
         <div className="w-full flex flex-col border border-black p-5 gap-5">
             <div className="flex flex-col gap-2">
-                <p className="font-bold text-2xl font-serif">Expand your career opportunities with AI</p>
+                <p className="font-bold text-2xl font-serif">Expand your career opportunities with C++</p>
                 <p className="resize-none line-clamp-3">
-                    Take one of LCode range of AI courses and learn how to code using this incredibly useful language.
-                    Its simple syntax and readability make AI perfect for Flask, Django, data science, and machine learning.
+                    Take one of LCode range of C++ courses and learn how to code using this incredibly useful language.
+                    Its simple syntax and readability make C++ perfect for Flask, Django, data science, and machine learning.
                     You will learn how to build everything from games to sites to apps. Choose from a range of courses that will appeal to you.
                 </p>
-                <button className="border border-slate-600 p-2 rounded-md font-bold w-fit">Explore AI</button>
+                <button className="border border-slate-600 p-2 rounded-md font-bold w-fit">Explore C++</button>
             </div>
             <div className="duration-300 flex flex-nowrap p-1 gap-x-3 overflow-x-auto">
                 {!videoList ? (
@@ -99,7 +99,7 @@ const AI = () => {
                 ) : (
                     videoList.map((course) => (
                         <div className="duration-200 p-1 cursor-pointer min-w-[250px]" key={course.videoId}>
-                            <LazyImage src={course.thumbnailUrl} alt={course.title} />
+                            <LazyImage src={course.thumbnCpluslUrl} alt={course.title} />
                             <p className="font-bold line-clamp-2">{course.title}</p>
                             <div className="flex flex-row items-center w-full justify-between">
                                 <p className="text-sm font-light">{course.channelTitle}</p>
@@ -113,4 +113,4 @@ const AI = () => {
     );
 };
 
-export default AI;
+export default Cplus;

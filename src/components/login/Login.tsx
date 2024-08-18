@@ -56,9 +56,15 @@ const Login: React.FC = () => {
                     <input type="checkbox" />
                     <p className="flex gap-1">I agree to LCode's <p className="text-blue-700 cursor-pointer">terms and condition</p></p>
                 </div>
-                <div className={`flex items-center  bg-purple-500 justify-center hover:scale-[1.05] relative w-1/2 p-3 h-16 rounded-xl overflow-hidden ${login ? "before:w-full" : ""} duration-300`}>
-                    <button type="submit" className={`absolute z-10 text-center w-full font-bold ${login ? "text-white":"text-white"} `}>Submit</button>
-                    <div className={`before:content-[''] before:absolute before:top-0 before:left-0 before:h-full before:bg-black before:duration-300 ${ login ? "before:w-full" : "before:w-0"}`}></div>
+                <div className="flex flex-row items-center justify-between">
+                    <div className={`flex items-center  bg-purple-500 justify-center hover:scale-[1.05] relative w-1/2 p-3 h-16 rounded-xl overflow-hidden ${login ? "before:w-full" : ""} duration-300`}>
+                        <button type="submit" className={`absolute z-10 text-center w-full font-bold ${login ? "text-white":"text-white"} `}>Submit</button>
+                        <div className={`before:content-[''] before:absolute before:top-0 before:left-0 before:h-full before:bg-black before:duration-300 ${ login ? "before:w-full" : "before:w-0"}`}></div>
+                    </div>
+                    <div>
+                        <img src="@/icons/google.png" alt="google image" />
+                        <p>Continue with Google</p>
+                    </div>
                 </div>
             </form>
             </div>

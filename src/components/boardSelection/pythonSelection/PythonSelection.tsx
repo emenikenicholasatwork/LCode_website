@@ -1,6 +1,7 @@
 import LazyImage from "@/components/lazyloadingimage/LazyImage";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { Vortex } from "react-loader-spinner";
 
 interface VideoInterface {
@@ -68,7 +69,7 @@ const PythonSelection = () => {
             setVideoList(videos);
         } catch (error) {
             console.error("Error fetching YouTube videos:", error);
-            throw new Error("Could not fetch YouTube videos with duration.");
+            toast.error("require internet connection")
         }
     }
 
